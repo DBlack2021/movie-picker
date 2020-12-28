@@ -4,18 +4,27 @@ export const getMovieData = async (query) => {
   const results = await response.json();
   const firstResult = results.results[0];
   
-  const genres = await getGenres(firstResult.genre_ids);
-
-  let data = {
-    id: firstResult.id,
-    title: firstResult.original_title,
-    poster: firstResult.poster_path,
-    stars: firstResult.vote_average,
-    description: firstResult.overview,
-    genres: genres.map(obj => obj.name)
+  try {
+    const genres = await getGenres(firstResult.genre_ids);
+    const data = {
+      id: firstResult.id,
+      title: firstResult.original_title,
+      poster: firstResult.poster_path,
+      stars: firstResult.vote_average,
+      description: firstResult.overview,
+      genres: genres.map(obj => obj.name)
+    }
+    return data;
+  } catch(err) {
+    return {
+      description: "", 
+      genres: [], 
+      id: 0, 
+      poster: "", 
+      stars: "", 
+      title: ""
+    }
   }
-
-  return data;
 }
 
 export const getGenres = async (genres) => {

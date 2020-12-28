@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Button } from '@material-ui/core'
+import { TextField, Button, IconButton } from '@material-ui/core'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import MovieResults from './MovieResults'
 import { getMovieData } from '../utils/utils'
+import styles from '../styles/Form.module.css'
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]);
@@ -14,6 +16,7 @@ export default function MoviePicker() {
     stars: "", 
     title: ""
   })
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     //When the user adds/removes a movie, reset the input and allow them to choose a new movie.
@@ -26,6 +29,7 @@ export default function MoviePicker() {
       stars: "", 
       title: ""
     })
+    setError(false);
   }, [movies])
 
   const addMovie = () => {
@@ -51,13 +55,16 @@ export default function MoviePicker() {
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-    if(!chosenMovieData.title) {
-      const randomMovieTitle = movies[~~(movies.length * Math.random())];
+      if(!chosenMovieData.title) {
+        const randomMovieTitle = movies[~~(movies.length * Math.random())];
 
-      getMovieData(randomMovieTitle).then((response) => {
-        setChosenMovieData(response)
-      })
-    } 
+        getMovieData(randomMovieTitle).then((response) => {
+          setChosenMovieData(response)
+          if(response.title === "") {
+            setError(true);
+          }
+        })
+      } 
   }
 
   const reset = () => {
@@ -71,29 +78,46 @@ export default function MoviePicker() {
       stars: "", 
       title: ""
     })
+    setError(false);
   }
 
   return (
-    <div>
-      <form autoComplete="off">
-        <TextField id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
-        <Button variant="contained" disabled={!movie} onClick={addMovie}>Add Movie</Button>
+    <div className={styles.appContainer}>
+      <form className={styles.form} autoComplete="off">
+        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
+        <IconButton className={styles.addMovie} aria-label="delete" disabled={!movie} onClick={addMovie} color="primary">
+          <AddCircleIcon />
+        </IconButton>
       </form>
       {movies.length > 0 && 
-        <div>
-          <p>Click to remove a movie</p>
-          <ol>
-            {movies.map(movie => (
-              <li key={movie} onClick={removeMovie}>{movie}</li>
-            ))}
-          </ol>
-          <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
-          
-          {chosenMovieData.title &&
-            <MovieResults movieData={chosenMovieData} />
+        <div className={styles.dataContainer}>
+          <div className={styles.listContainer}>
+            <h3>Your Movies:</h3>
+            <ul className={styles.list}>
+              {movies.map(movie => (
+                <li key={movie} onClick={removeMovie}>{movie}</li>
+              ))}
+            </ul>
+            <p><b>Click to remove a movie</b></p>
+          </div>
+
+          <div className={styles.submitButtons}>
+            <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
+          </div>
+
+          {error && 
+            <div>
+              <h3 style={{color: 'red'}}>No movies were found. Please check the titles you entered and try again</h3>
+              <Button variant="contained" onClick={reset}>Reset</Button>
+            </div>
           }
-        
-          <Button variant="contained" onClick={reset}>Reset</Button>
+
+          {chosenMovieData.title &&
+            <div className={styles.results}>
+              <MovieResults movieData={chosenMovieData} />
+              <Button variant="contained" onClick={reset}>Reset</Button>
+            </div>
+          }
         </div>   
       }
     </div>
