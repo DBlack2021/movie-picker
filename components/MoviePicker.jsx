@@ -43,8 +43,8 @@ export default function MoviePicker() {
   }
 
   const removeMovie = (event) => {
-    let movie = event.target.innerHTML; //TODO: Find better way of doing this
-    const newMovies = movies.filter(movieName => movieName != movie)
+    let movieID = event.target.value;
+    const newMovies = movies.filter(movieFilter => movieFilter.id != movieID)
     setMovies(newMovies);
   }
 
@@ -61,16 +61,13 @@ export default function MoviePicker() {
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-      if(!chosenMovieData.title) {
-        const randomMovieTitle = movies[~~(movies.length * Math.random())];
+    if(!chosenMovieData.title) {
+      const randomMovie = movies[~~(movies.length * Math.random())];
 
-        getMovieData(randomMovieTitle).then((response) => {
-          setChosenMovieData(response)
-          if(response.title === "") {
-            setError(true);
-          }
-        })
-      } 
+      getMovieData(randomMovie.id).then(response => {
+        setChosenMovieData(response)
+      })
+    } 
   }
 
   const reset = () => {
@@ -90,9 +87,14 @@ export default function MoviePicker() {
   const search = () => {
     if(movie) {
       searchMovies(movie).then(response => {
-        setSearchResults(response);
+        if(response.results.length == 0) {
+          setError(true);
+        } else {
+          setSearchResults(response);
+        }
       })
     }
+    setMovie("");
   }
 
   return (
@@ -104,8 +106,11 @@ export default function MoviePicker() {
         </IconButton>
       </form>
 
-      {searchResults.length != 0 && 
-        <MovieSearch results={searchResults.results} addMovie={addMovie} /> 
+      {searchResults.length != 0 &&
+        <div className={styles.results}>
+          <MovieSearch results={searchResults.results} addMovie={addMovie} />
+          <Button variant="contained" onClick={() => setSearchResults([])}>Close Results</Button>
+        </div>
       }
 
       {movies.length > 0 && 
@@ -114,7 +119,7 @@ export default function MoviePicker() {
             <h3>Your Movies:</h3>
             <ul className={styles.list}>
               {movies.map(movie => (
-                <li key={movie} onClick={removeMovie}>{movie}</li>
+                <li key={movie.id} onClick={removeMovie} value={movie.id}>{movie.title}</li>
               ))}
             </ul>
             <p><b>Click to remove a movie</b></p>
