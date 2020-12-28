@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button } from '@material-ui/core'
-import { getGenres, getMovieData } from '../utils/utils'
+import MovieResults from './MovieResults'
+import { getMovieData } from '../utils/utils'
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]);
@@ -88,13 +89,8 @@ export default function MoviePicker() {
           </ol>
           <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
           
-          {/* TODO: move to separate MovieResults component */}
           {chosenMovieData.title &&
-            <div>
-              <h1>You will be watching...{chosenMovieData.title}!</h1>
-              {console.log(chosenMovieData)}
-              <p>{chosenMovieData.description}</p>
-            </div>
+            <MovieResults movieData={chosenMovieData} />
           }
         
           <Button variant="contained" onClick={reset}>Reset</Button>
