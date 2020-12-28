@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import SearchIcon from '@material-ui/icons/Search';
 import MovieResults from './MovieResults'
 import { getMovieData } from '../utils/utils'
 import styles from '../styles/Form.module.css'
@@ -85,8 +85,8 @@ export default function MoviePicker() {
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
         <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
-        <IconButton className={styles.addMovie} aria-label="delete" disabled={!movie} onClick={addMovie} color="primary">
-          <AddCircleIcon />
+        <IconButton className={styles.addMovie} disabled={!movie} onClick={addMovie} color="primary">
+          <SearchIcon />
         </IconButton>
       </form>
       {movies.length > 0 && 

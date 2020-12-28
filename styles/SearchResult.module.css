@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  padding: 50px;
+}
+
+.poster {
+  /* 500x750 by default */
+  height: calc(750px / 4);
+  width: calc(500px / 4);
+}
+
+.title {
+  margin-bottom: 0;
+}
