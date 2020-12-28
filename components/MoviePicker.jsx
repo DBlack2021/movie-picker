@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button } from '@material-ui/core'
+import { getGenres, getMovieData } from '../utils/utils'
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]);
   const [movie, setMovie] = useState("");
-  const [chosenMovie, setChosenMovie] = useState("");
+  const [chosenMovieData, setChosenMovieData] = useState({
+    description: "", 
+    genres: [], 
+    id: 0, 
+    poster: "", 
+    stars: "", 
+    title: ""
+  })
 
   useEffect(() => {
     //When the user adds/removes a movie, reset the input and allow them to choose a new movie.
-    setChosenMovie("");
     setMovie("");
+    setChosenMovieData({
+      description: "", 
+      genres: [], 
+      id: 0, 
+      poster: "", 
+      stars: "", 
+      title: ""
+    })
   }, [movies])
 
   const addMovie = () => {
@@ -35,15 +50,26 @@ export default function MoviePicker() {
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-    if(!chosenMovie) {
-      setChosenMovie(movies[~~(movies.length * Math.random())]);
-    }
+    if(!chosenMovieData.title) {
+      const randomMovieTitle = movies[~~(movies.length * Math.random())];
+
+      getMovieData(randomMovieTitle).then((response) => {
+        setChosenMovieData(response)
+      })
+    } 
   }
 
   const reset = () => {
     setMovies([]);
     setMovie("");
-    setChosenMovie("");
+    setChosenMovieData({
+      description: "", 
+      genres: [], 
+      id: 0, 
+      poster: "", 
+      stars: "", 
+      title: ""
+    })
   }
 
   return (
@@ -60,10 +86,16 @@ export default function MoviePicker() {
               <li key={movie} onClick={removeMovie}>{movie}</li>
             ))}
           </ol>
-          <Button variant="contained" onClick={chooseMovie}>Choose a Movie!</Button>
+          <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
           
-          {chosenMovie &&
-          <h1>You will be watching...{chosenMovie}!</h1>}
+          {/* TODO: move to separate MovieResults component */}
+          {chosenMovieData.title &&
+            <div>
+              <h1>You will be watching...{chosenMovieData.title}!</h1>
+              {console.log(chosenMovieData)}
+              <p>{chosenMovieData.description}</p>
+            </div>
+          }
         
           <Button variant="contained" onClick={reset}>Reset</Button>
         </div>   
