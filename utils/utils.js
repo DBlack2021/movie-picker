@@ -1,18 +1,16 @@
-export const getMovieData = async (query) => {
-  const url = `https://api.themoviedb.org/3/search/movie?api_key=dea81014c2ec4aeceb134efbf3cfff1f&language=en-US&query=${query}&page=1`
+export const getMovieData = async (id) => {
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=dea81014c2ec4aeceb134efbf3cfff1f&language=en-US`
   const response = await fetch(url);
-  const results = await response.json();
-  const firstResult = results.results[0];
-  
+  const result = await response.json();
+
   try {
-    const genres = await getGenres(firstResult.genre_ids);
     const data = {
-      id: firstResult.id,
-      title: firstResult.original_title,
-      poster: firstResult.poster_path,
-      stars: firstResult.vote_average,
-      description: firstResult.overview,
-      genres: genres.map(obj => obj.name)
+      id: result.id,
+      title: result.original_title,
+      poster: result.poster_path,
+      stars: result.vote_average,
+      description: result.overview,
+      genres: result.genres.map(obj => obj.name)
     }
     return data;
   } catch(err) {
@@ -25,6 +23,13 @@ export const getMovieData = async (query) => {
       title: ""
     }
   }
+}
+
+export const searchMovies = async (query) => {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=dea81014c2ec4aeceb134efbf3cfff1f&language=en-US&query=${query}&page=1`
+  const response = await fetch(url);
+  const results = await response.json();
+  return results;
 }
 
 export const getGenres = async (genres) => {

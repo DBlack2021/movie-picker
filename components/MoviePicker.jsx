@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import SearchIcon from '@material-ui/icons/Search';
 import MovieResults from './MovieResults'
-import { getMovieData } from '../utils/utils'
+import { getMovieData, searchMovies } from '../utils/utils'
 import styles from '../styles/Form.module.css'
+import MovieSearch from './MovieSearch';
 
 export default function MoviePicker() {
-  const [movies, setMovies] = useState([]);
-  const [movie, setMovie] = useState("");
+  const [movies, setMovies] = useState([]); //the list of movies (an array of objects)
+  const [movie, setMovie] = useState(""); //the current search query
+
+  const [searchResults, setSearchResults] = useState([]) //results
+
   const [chosenMovieData, setChosenMovieData] = useState({
     description: "", 
     genres: [], 
@@ -15,7 +19,8 @@ export default function MoviePicker() {
     poster: "", 
     stars: "", 
     title: ""
-  })
+  }) //the randomly chosen movie
+
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -29,16 +34,17 @@ export default function MoviePicker() {
       stars: "", 
       title: ""
     })
+    setSearchResults([]);
     setError(false);
   }, [movies])
 
-  const addMovie = () => {
-    setMovies(movie && [...new Set([...movies, movie])])
+  const addMovie = (movie) => {
+    setMovies([...new Set([...movies, movie])])
   }
 
   const removeMovie = (event) => {
-    let movie = event.target.innerHTML; //TODO: Find better way of doing this
-    const newMovies = movies.filter(movieName => movieName != movie)
+    let movieID = event.target.value;
+    const newMovies = movies.filter(movieFilter => movieFilter.id != movieID)
     setMovies(newMovies);
   }
 
@@ -49,22 +55,19 @@ export default function MoviePicker() {
   const preventRefresh = (event) => {
     if(event.keyCode === 13) {
       event.preventDefault();
-      addMovie();
+      search();
     }
   }
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-      if(!chosenMovieData.title) {
-        const randomMovieTitle = movies[~~(movies.length * Math.random())];
+    if(!chosenMovieData.title) {
+      const randomMovie = movies[~~(movies.length * Math.random())];
 
-        getMovieData(randomMovieTitle).then((response) => {
-          setChosenMovieData(response)
-          if(response.title === "") {
-            setError(true);
-          }
-        })
-      } 
+      getMovieData(randomMovie.id).then(response => {
+        setChosenMovieData(response)
+      })
+    } 
   }
 
   const reset = () => {
@@ -81,21 +84,42 @@ export default function MoviePicker() {
     setError(false);
   }
 
+  const search = () => {
+    if(movie) {
+      searchMovies(movie).then(response => {
+        if(response.results.length == 0) {
+          setError(true);
+        } else {
+          setSearchResults(response);
+        }
+      })
+    }
+    setMovie("");
+  }
+
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
         <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
-        <IconButton className={styles.addMovie} aria-label="delete" disabled={!movie} onClick={addMovie} color="primary">
-          <AddCircleIcon />
+        <IconButton className={styles.addMovie} disabled={!movie} onClick={search} color="primary">
+          <SearchIcon />
         </IconButton>
       </form>
+
+      {searchResults.length != 0 &&
+        <div className={styles.results}>
+          <MovieSearch results={searchResults.results} addMovie={addMovie} />
+          <Button variant="contained" onClick={() => setSearchResults([])}>Close Results</Button>
+        </div>
+      }
+
       {movies.length > 0 && 
         <div className={styles.dataContainer}>
           <div className={styles.listContainer}>
             <h3>Your Movies:</h3>
             <ul className={styles.list}>
               {movies.map(movie => (
-                <li key={movie} onClick={removeMovie}>{movie}</li>
+                <li key={movie.id} onClick={removeMovie} value={movie.id}>{movie.title}</li>
               ))}
             </ul>
             <p><b>Click to remove a movie</b></p>

@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  overflow: ellipsis;
+  padding: 50px;
+}
+
+.poster {
+  /* 500x750 by default */
+  height: calc(750px / 4);
+  width: calc(500px / 4);
+}
+
+.title {
+  margin-bottom: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.5em;
+}
