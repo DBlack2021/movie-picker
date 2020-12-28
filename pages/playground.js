@@ -1,6 +1,5 @@
-import SearchResult from '../components/SearchResult'
 import MovieSearch from '../components/MovieSearch'
-import { TestMovie1, TestMovie2, TestMovies } from '../utils/TestData';
+import { TestMovies } from '../utils/TestData';
 
 export default function Playground () {
 
@@ -10,6 +9,5 @@ export default function Playground () {
 
   return (
     <MovieSearch results={TestMovies} addMovie={addMovie} />
-    
   )
 }

@@ -21,15 +21,15 @@ export default function MovieSearch({ results, addMovie }) {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <IconButton className={styles.navButton} disabled={page == 0} onClick={() => changePage(-1)} color="primary">
         <NavigateBeforeIcon />
       </IconButton>
 
-      <div>
+      <div className={styles.results}>
         {
           pages[page].map(movie => (
-            <SearchResult key={movie.title} movie={movie} addMovie={() => addMovie(movie)} />
+            <SearchResult key={movie.id} movie={movie} addMovie={() => addMovie(movie)} />
           ))
         }
       </div>

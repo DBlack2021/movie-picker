@@ -27,6 +27,13 @@ export const getMovieData = async (query) => {
   }
 }
 
+export const searchMovies = async (query) => {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=dea81014c2ec4aeceb134efbf3cfff1f&language=en-US&query=${query}&page=1`
+  const response = await fetch(url);
+  const results = await response.json();
+  return results;
+}
+
 export const getGenres = async (genres) => {
   const url = "https://api.themoviedb.org/3/genre/movie/list?api_key=dea81014c2ec4aeceb134efbf3cfff1f&language=en-US";
   const response = await fetch(url);

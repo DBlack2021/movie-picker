@@ -11,7 +11,6 @@ export default function SearchResult({ movie, addMovie }) {
       {poster && 
         <img className={styles.poster} src={poster} />
       }
-      <h3 className={styles.title}>{movie.title}</h3>
       <IconButton className={styles.addButton} disabled={!movie.title && !movie.poster} onClick={() => addMovie(movie)} color="primary"> 
         <AddCircleIcon />
       </IconButton>

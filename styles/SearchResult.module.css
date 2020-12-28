@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 100px;
+  overflow: ellipsis;
   padding: 50px;
 }
 
@@ -14,4 +15,8 @@
 
 .title {
   margin-bottom: 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 1.5em;
 }
