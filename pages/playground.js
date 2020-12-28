@@ -1,6 +1,6 @@
-
-import SearchResult from '../components/SearchResult';
-import { TestMovie, TestMovies } from '../utils/TestData';
+import SearchResult from '../components/SearchResult'
+import MovieSearch from '../components/MovieSearch'
+import { TestMovie1, TestMovie2, TestMovies } from '../utils/TestData';
 
 export default function Playground () {
 
@@ -9,10 +9,7 @@ export default function Playground () {
   }
 
   return (
-    <div>
-      <h1>Da Playground</h1>
-      {/* Random Testing Shtuff goes here */}
-      <SearchResult movie={TestMovie} addMovie={addMovie} />
-    </div>
+    <MovieSearch results={TestMovies} addMovie={addMovie} />
+    
   )
 }
