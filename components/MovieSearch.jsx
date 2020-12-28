@@ -9,6 +9,7 @@ import SearchResult from './SearchResult'
 import styles from '../styles/SearchResults.module.css';
 
 export default function MovieSearch({ results, addMovie }) {
+
   const [page, setPage] = useState(0);
 
   //Code from Grepper
