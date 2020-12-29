@@ -16,7 +16,5 @@
 .title {
   margin-bottom: 0;
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 1.5em;
+  align-self: center;
 }

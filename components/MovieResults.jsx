@@ -4,7 +4,7 @@ import styles from '../styles/Results.module.css';
 
 export default function MovieResults({ movieData }) {
   const {title, poster, stars, description, genres} = movieData;
-  console.log(styles);
+
   return (
     <div className={styles.resultsContainer}>
       <img src={`https://image.tmdb.org/t/p/w500${poster}`} />
