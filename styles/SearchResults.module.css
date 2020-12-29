@@ -5,6 +5,7 @@
 
 .results {
   display: flex;
+  align-items: center;
 }
 
 .navButton {
