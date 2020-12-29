@@ -88,12 +88,18 @@ export default function MoviePicker() {
     if(movie) {
       searchMovies(movie).then(response => {
         if(response.results.length == 0) {
+          console.log("Got here!");
           setError(true);
         } else {
-          setSearchResults(response);
+          setSearchResults(response.results);
+          setMovie("");
         }
       })
-    }
+    }  
+  }
+
+  const closeNoResults = () => {
+    setError(false);
     setMovie("");
   }
 
@@ -108,8 +114,15 @@ export default function MoviePicker() {
 
       {searchResults.length != 0 &&
         <div className={styles.results}>
-          <MovieSearch results={searchResults.results} addMovie={addMovie} />
+          <MovieSearch results={searchResults} addMovie={addMovie} />
           <Button variant="contained" onClick={() => setSearchResults([])}>Close Results</Button>
+        </div>
+      }
+
+      {error && 
+        <div className={styles.error}>
+          <h3 style={{color: 'red'}}>No movies were found. Please check the titles you entered and try again</h3>
+          <Button variant="contained" onClick={closeNoResults}>Close</Button>
         </div>
       }
 
@@ -129,13 +142,6 @@ export default function MoviePicker() {
             <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
           </div>
 
-          {error && 
-            <div>
-              <h3 style={{color: 'red'}}>No movies were found. Please check the titles you entered and try again</h3>
-              <Button variant="contained" onClick={reset}>Reset</Button>
-            </div>
-          }
-
           {chosenMovieData.title &&
             <div className={styles.results}>
               <MovieResults movieData={chosenMovieData} />
@@ -144,6 +150,8 @@ export default function MoviePicker() {
           }
         </div>   
       }
+
+
     </div>
   )
 }
