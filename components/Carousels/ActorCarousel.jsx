@@ -7,10 +7,10 @@ import Carousel from './Carousel';
 export default function ActorCarousel({ results }) {
   return (
     <div style={{ padding: '30px' }} className={styles.container}>
-      <Carousel itemsPerPage={3}>
+      <Carousel itemsPerPage={5}>
         {
-          results.map(result => (
-            <ActorCard actor={result} />
+          results.filter(result => result.profile_path).map(result => (
+            <ActorCard actor={result} />           
           ))
         }
       </Carousel>

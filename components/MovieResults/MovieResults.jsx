@@ -44,7 +44,8 @@ export default function MovieResults({ movieData }) {
 
         </div>
       </div>
-      <div className={styles.actorCarousel}>
+      <h2 style={{ textDecoration: 'underline', margin: '5px' }}>Check Out The Cast:</h2>
+      <div className={styles.actorCarousel}>       
         <ActorCarousel results={starring} />
       </div>
     </div>

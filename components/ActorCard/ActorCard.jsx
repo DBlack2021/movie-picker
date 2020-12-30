@@ -7,7 +7,9 @@ export default function ActorCard({ actor }) {
 
   return (
     <div className={styles.container}>
-      <img className={styles.img} src={`https://image.tmdb.org/t/p/w500${imgSrc}`} />
+      {imgSrc &&
+        <img className={styles.img} src={`https://image.tmdb.org/t/p/w500${imgSrc}`} />
+      }
       <div className={styles.text}>
         <h5 className={styles.name}>{name}</h5>
       </div>
