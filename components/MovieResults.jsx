@@ -1,9 +1,10 @@
 import React from 'react'
 import StarRatingComponent from 'react-star-rating-component';
 import styles from '../styles/Results.module.css';
+import ActorCarousel from './ActorCarousel';
 
 export default function MovieResults({ movieData }) {
-  const {title, poster, stars, description, genres} = movieData;
+  const {title, poster, stars, description, genres, starring} = movieData;
 
   return (
     <div className={styles.resultsContainer}>
@@ -43,7 +44,9 @@ export default function MovieResults({ movieData }) {
 
         </div>
       </div>
-      
+      <div className={styles.actorCarousel}>
+        <ActorCarousel results={starring} />
+      </div>
     </div>
   )
 }

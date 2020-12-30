@@ -1,16 +1,16 @@
 import React from 'react'
-import SearchResult from './SearchResult'
+import ActorCard from './ActorCard'
 
 import styles from '../styles/SearchResults.module.css';
 import Carousel from './Carousel';
 
-export default function MovieSearch({ results, addMovie }) {
+export default function ActorCarousel({ results }) {
   return (
-    <div className={styles.container}>
+    <div style={{ padding: '30px' }} className={styles.container}>
       <Carousel itemsPerPage={3}>
         {
           results.map(result => (
-            <SearchResult movie={result} addMovie={addMovie} />
+            <ActorCard actor={result} />
           ))
         }
       </Carousel>
