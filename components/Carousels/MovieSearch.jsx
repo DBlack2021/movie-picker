@@ -1,7 +1,7 @@
 import React from 'react'
-import SearchResult from './SearchResult'
+import SearchResult from '../SearchResult/SearchResult'
 
-import styles from '../styles/SearchResults.module.css';
+import styles from './SearchResults.module.css';
 import Carousel from './Carousel';
 
 export default function MovieSearch({ results, addMovie }) {

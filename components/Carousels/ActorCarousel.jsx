@@ -1,7 +1,7 @@
 import React from 'react'
-import ActorCard from './ActorCard'
+import ActorCard from '../ActorCard/ActorCard'
 
-import styles from '../styles/SearchResults.module.css';
+import styles from './SearchResults.module.css';
 import Carousel from './Carousel';
 
 export default function ActorCarousel({ results }) {

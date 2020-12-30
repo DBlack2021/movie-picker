@@ -4,7 +4,7 @@ import { IconButton } from '@material-ui/core'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import styles from '../styles/SearchResults.module.css'
+import styles from './SearchResults.module.css'
 
 export default function Carousel({ itemsPerPage, children }) {
   const [page, setPage] = useState(0);

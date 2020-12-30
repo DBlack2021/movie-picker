@@ -1,4 +1,4 @@
-import MoviePicker from '../components/MoviePicker'
+import MoviePicker from '../components/MoviePicker/MoviePicker'
 import styles from '../styles/Home.module.css'
 import Head from 'next/head'
 

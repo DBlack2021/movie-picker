@@ -1,7 +1,7 @@
 import React from 'react'
 import StarRatingComponent from 'react-star-rating-component';
-import styles from '../styles/Results.module.css';
-import ActorCarousel from './ActorCarousel';
+import styles from './Results.module.css';
+import ActorCarousel from '../Carousels/ActorCarousel';
 
 export default function MovieResults({ movieData }) {
   const {title, poster, stars, description, genres, starring} = movieData;

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
-import MovieResults from './MovieResults'
-import { getMovieData, searchMovies } from '../utils/utils'
-import styles from '../styles/Form.module.css'
-import MovieSearch from './MovieSearch';
+import MovieResults from '../MovieResults/MovieResults'
+import { getMovieData, searchMovies } from '../../utils/utils'
+import styles from './Form.module.css'
+import MovieSearch from '../Carousels/MovieSearch';
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]); //the list of movies (an array of objects)
