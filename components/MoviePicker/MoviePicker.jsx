@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search';
-import MovieResults from './MovieResults'
-import { getMovieData, searchMovies } from '../utils/utils'
-import styles from '../styles/Form.module.css'
-import MovieSearch from './MovieSearch';
+import MovieResults from '../MovieResults/MovieResults'
+import { getMovieData, searchMovies } from '../../utils/utils'
+import styles from './Form.module.css'
+import MovieSearch from '../Carousels/MovieSearch';
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]); //the list of movies (an array of objects)
@@ -18,7 +18,8 @@ export default function MoviePicker() {
     id: 0, 
     poster: "", 
     stars: "", 
-    title: ""
+    title: "",
+    starring: [],
   }) //the randomly chosen movie
 
   const [error, setError] = useState(false);
@@ -32,7 +33,8 @@ export default function MoviePicker() {
       id: 0, 
       poster: "", 
       stars: "", 
-      title: ""
+      title: "",
+      starring: [],
     })
     setSearchResults([]);
     setError(false);
@@ -65,6 +67,7 @@ export default function MoviePicker() {
       const randomMovie = movies[~~(movies.length * Math.random())];
 
       getMovieData(randomMovie.id).then(response => {
+        console.log(response);
         setChosenMovieData(response)
       })
     } 
@@ -79,7 +82,8 @@ export default function MoviePicker() {
       id: 0, 
       poster: "", 
       stars: "", 
-      title: ""
+      title: "",
+      starring: [],
     })
     setError(false);
   }
@@ -88,7 +92,6 @@ export default function MoviePicker() {
     if(movie) {
       searchMovies(movie).then(response => {
         if(response.results.length == 0) {
-          console.log("Got here!");
           setError(true);
         } else {
           setSearchResults(response.results);
@@ -150,8 +153,6 @@ export default function MoviePicker() {
           }
         </div>   
       }
-
-
     </div>
   )
 }

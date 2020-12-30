@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 
 import { IconButton } from '@material-ui/core'
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import SearchResult from './SearchResult'
+import styles from './SearchResults.module.css'
 
-import styles from '../styles/SearchResults.module.css';
-
-export default function MovieSearch({ results, addMovie }) {
-
+export default function Carousel({ itemsPerPage, children }) {
   const [page, setPage] = useState(0);
 
   //Code from Grepper
   const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
-  const pages = chunk(results, 3);
+  const pages = chunk(children, itemsPerPage);
 
   const changePage = (increment) => {
     setPage(page + increment);
@@ -29,8 +26,8 @@ export default function MovieSearch({ results, addMovie }) {
 
       <div className={styles.results}>
         {
-          pages[page].map(movie => (
-            <SearchResult key={movie.id} movie={movie} addMovie={() => addMovie(movie)} />
+          pages[page].map(child => (
+            child
           ))
         }
       </div>

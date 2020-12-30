@@ -1,7 +1,7 @@
 import React from 'react'
 import { IconButton } from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import styles from '../styles/SearchResult.module.css';
+import styles from './SearchResult.module.css';
 
 export default function SearchResult({ movie, addMovie }) {
 
