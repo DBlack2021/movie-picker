@@ -44,3 +44,22 @@ export const getStarring = async (id) => {
   const credits = await response.json();
   return credits.cast;
 }
+
+export const getActorData = async (id) => {
+  const url = `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=en-US`
+  const response = await fetch(url);
+  const actorData = await response.json();
+  const actorObj = {    
+    biography: actorData.biography,
+    name: actorData.name,
+    profile_path: actorData.profile_path,
+  }
+  return actorObj;
+}
+
+export const getActorCredits = async (id) => {
+  const url = `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}&language=en-US`
+  const response = await fetch(url);
+  const credits = await response.json();
+  return credits.cast;
+}
