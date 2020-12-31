@@ -62,9 +62,11 @@ export default function MoviePicker() {
     search(event.target.value);
   }
 
-  const preventRefresh = (event) => {
+  const handleKeyDown = (event) => {
     if(event.keyCode === 13) { //if the user presses enter, stop the page from refreshing
       event.preventDefault();
+    } else if(event.keyCode === 8 && movie.length == 0) { //if the user backspaces on an empty input, set search to nothing
+      setSearchResults([]);
     }
   }
 
@@ -115,7 +117,7 @@ export default function MoviePicker() {
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
-        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
+        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
         {/* <IconButton className={styles.addMovie} disabled={!movie} onClick={() => search(movie)} color="primary">
           <SearchIcon />
         </IconButton> */}
