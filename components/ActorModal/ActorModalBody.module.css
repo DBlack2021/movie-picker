@@ -1,0 +1,28 @@
+.container {
+  width: 500px;
+  max-height: 500px;
+  overflow-y: scroll;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.header {
+  display: flex;
+  padding: 15px;
+  justify-content: space-around;
+}
+
+.title {
+  text-align: center;
+  align-self: center;
+}
+
+.img {
+  border-radius: 5px;
+}
+
+.bio {
+  padding: 0 15px;
+  text-align: center;
+}

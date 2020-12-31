@@ -8,3 +8,12 @@ body {
   font-family: Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Fira Code, Droid Sans, Helvetica Neue, sans-serif;
 }
+
+img {
+  height: calc(750px / 4);
+  width: calc(500px / 4);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

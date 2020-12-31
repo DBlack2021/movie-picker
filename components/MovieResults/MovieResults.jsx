@@ -8,7 +8,7 @@ export default function MovieResults({ movieData }) {
 
   return (
     <div className={styles.resultsContainer}>
-      {poster != null && <img src={`https://image.tmdb.org/t/p/w500${poster}`} />}
+      {poster != null && <img src={`https://image.tmdb.org/t/p/w500${poster}`} style={{ width: '500px', height: '700px' }}/>}
       <h1>You'll be watching...</h1>
       <h1>{title}!</h1>
       {description.length > 0 && <p>{description}</p>}

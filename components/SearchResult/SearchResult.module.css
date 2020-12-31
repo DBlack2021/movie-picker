@@ -4,13 +4,7 @@
   align-items: center;
   width: 100px;
   overflow: ellipsis;
-  padding: 50px;
-}
-
-.poster {
-  /* 500x750 by default */
-  height: calc(750px / 4);
-  width: calc(500px / 4);
+  padding: 0 50px;
 }
 
 .title {
