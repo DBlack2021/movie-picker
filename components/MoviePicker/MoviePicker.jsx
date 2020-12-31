@@ -118,9 +118,6 @@ export default function MoviePicker() {
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
         <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
-        {/* <IconButton className={styles.addMovie} disabled={!movie} onClick={() => search(movie)} color="primary">
-          <SearchIcon />
-        </IconButton> */}
       </form>
 
       {searchResults.length != 0 &&
