@@ -10,7 +10,7 @@ export default function ActorCarousel({ results }) {
       <Carousel itemsPerPage={5}>
         {
           results.filter(result => result.profile_path).map(result => (
-            <ActorCard actor={result} />           
+            <ActorCard key={result.id} actor={result} />           
           ))
         }
       </Carousel>
