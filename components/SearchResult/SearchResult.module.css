@@ -4,7 +4,7 @@
   align-items: center;
   width: 100px;
   overflow: ellipsis;
-  padding: 50px;
+  padding: 0 50px;
 }
 
 .title {
