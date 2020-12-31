@@ -43,11 +43,20 @@ export default function MovieResults({ movieData }) {
           }
 
         </div>
-      </div>
-      <h2 style={{ textDecoration: 'underline', margin: '5px' }}>Check Out The Cast:</h2>
-      <div className={styles.actorCarousel}>       
-        <ActorCarousel results={starring} />
-      </div>
+      </div> 
+      {starring.filter(result => result.profile_path).length > 0
+        ? 
+        <>
+          <h2 style={{ textDecoration: 'underline', margin: '5px' }}>Check Out The Cast:</h2>
+          <div className={styles.actorCarousel}>       
+            <ActorCarousel results={starring} />
+          </div>
+        </>
+        :
+        <>
+          <h1>No Cast Found 😢</h1>
+        </>
+      }
     </div>
   )
 }

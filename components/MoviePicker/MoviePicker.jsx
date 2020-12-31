@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
 import MovieResults from '../MovieResults/MovieResults'
 import { getMovieData, searchMovies } from '../../utils/utils'
 import styles from './Form.module.css'
@@ -40,6 +39,13 @@ export default function MoviePicker() {
     setError(false);
   }, [movies])
 
+  useEffect(() => {
+    if(movie.length == 0) {
+      setSearchResults([]);
+    }
+    setError(false);
+  }, [movie])
+
   const addMovie = (movie) => {
     setMovies([...new Set([...movies, movie])])
   }
@@ -52,25 +58,24 @@ export default function MoviePicker() {
 
   const handleInput = (event) => {
     setMovie(event.target.value);
+    search(event.target.value);
   }
 
-  const preventRefresh = (event) => {
-    if(event.keyCode === 13) {
+  const handleKeyDown = (event) => {
+    if(event.keyCode === 13) { //if the user presses enter, stop the page from refreshing
       event.preventDefault();
-      search();
+    } else if(event.keyCode === 8 && movie.length == 0) { //if the user backspaces on an empty input, set search to nothing
+      setSearchResults([]);
     }
   }
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-    if(!chosenMovieData.title) {
-      const randomMovie = movies[~~(movies.length * Math.random())];
+    const randomMovie = movies[~~(movies.length * Math.random())];
 
-      getMovieData(randomMovie.id).then(response => {
-        console.log(response);
-        setChosenMovieData(response)
-      })
-    } 
+    getMovieData(randomMovie.id).then(response => {
+      setChosenMovieData(response)
+    })
   }
 
   const reset = () => {
@@ -88,14 +93,14 @@ export default function MoviePicker() {
     setError(false);
   }
 
-  const search = () => {
-    if(movie) {
-      searchMovies(movie).then(response => {
+  const search = (query) => {
+    if(query) {
+      searchMovies(query).then(response => {
         if(response.results.length == 0) {
+          setSearchResults([]);
           setError(true);
         } else {
           setSearchResults(response.results);
-          setMovie("");
         }
       })
     }  
@@ -109,10 +114,7 @@ export default function MoviePicker() {
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
-        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
-        <IconButton className={styles.addMovie} disabled={!movie} onClick={search} color="primary">
-          <SearchIcon />
-        </IconButton>
+        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
       </form>
 
       {searchResults.length != 0 &&
@@ -142,7 +144,7 @@ export default function MoviePicker() {
           </div>
 
           <div className={styles.submitButtons}>
-            <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
+            <Button variant="contained" onClick={chooseMovie}>{`Choose A ${chosenMovieData.title && 'New'} Movie!`}</Button>
           </div>
 
           {chosenMovieData.title &&
