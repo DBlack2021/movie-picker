@@ -71,13 +71,11 @@ export default function MoviePicker() {
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-    if(!chosenMovieData.title) {
-      const randomMovie = movies[~~(movies.length * Math.random())];
+    const randomMovie = movies[~~(movies.length * Math.random())];
 
-      getMovieData(randomMovie.id).then(response => {
-        setChosenMovieData(response)
-      })
-    } 
+    getMovieData(randomMovie.id).then(response => {
+      setChosenMovieData(response)
+    })
   }
 
   const reset = () => {
@@ -146,7 +144,7 @@ export default function MoviePicker() {
           </div>
 
           <div className={styles.submitButtons}>
-            <Button variant="contained" disabled={!!chosenMovieData.title} onClick={chooseMovie}>Choose a Movie!</Button>
+            <Button variant="contained" onClick={chooseMovie}>{`Choose A ${chosenMovieData.title && 'New'} Movie!`}</Button>
           </div>
 
           {chosenMovieData.title &&
