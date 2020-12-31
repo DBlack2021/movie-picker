@@ -40,6 +40,13 @@ export default function MoviePicker() {
     setError(false);
   }, [movies])
 
+  useEffect(() => {
+    if(movie.length == 0) {
+      setSearchResults([]);
+    }
+    setError(false);
+  }, [movie])
+
   const addMovie = (movie) => {
     setMovies([...new Set([...movies, movie])])
   }
@@ -52,12 +59,12 @@ export default function MoviePicker() {
 
   const handleInput = (event) => {
     setMovie(event.target.value);
+    search(event.target.value);
   }
 
   const preventRefresh = (event) => {
-    if(event.keyCode === 13) {
+    if(event.keyCode === 13) { //if the user presses enter, stop the page from refreshing
       event.preventDefault();
-      search();
     }
   }
 
@@ -67,7 +74,6 @@ export default function MoviePicker() {
       const randomMovie = movies[~~(movies.length * Math.random())];
 
       getMovieData(randomMovie.id).then(response => {
-        console.log(response);
         setChosenMovieData(response)
       })
     } 
@@ -88,14 +94,14 @@ export default function MoviePicker() {
     setError(false);
   }
 
-  const search = () => {
-    if(movie) {
-      searchMovies(movie).then(response => {
+  const search = (query) => {
+    if(query) {
+      searchMovies(query).then(response => {
         if(response.results.length == 0) {
+          setSearchResults([]);
           setError(true);
         } else {
           setSearchResults(response.results);
-          setMovie("");
         }
       })
     }  
@@ -110,9 +116,9 @@ export default function MoviePicker() {
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
         <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={preventRefresh} />
-        <IconButton className={styles.addMovie} disabled={!movie} onClick={search} color="primary">
+        {/* <IconButton className={styles.addMovie} disabled={!movie} onClick={() => search(movie)} color="primary">
           <SearchIcon />
-        </IconButton>
+        </IconButton> */}
       </form>
 
       {searchResults.length != 0 &&

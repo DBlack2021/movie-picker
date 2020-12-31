@@ -10,7 +10,7 @@ export default function MovieSearch({ results, addMovie }) {
       <Carousel itemsPerPage={3}>
         {
           results.map(result => (
-            <SearchResult movie={result} addMovie={addMovie} />
+            <SearchResult key={result.id} movie={result} addMovie={addMovie} />
           ))
         }
       </Carousel>

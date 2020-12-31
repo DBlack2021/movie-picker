@@ -12,7 +12,7 @@ export default function Carousel({ itemsPerPage, children }) {
   //Code from Grepper
   const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
-  const pages = chunk(children, itemsPerPage);
+  const pages = children.length >= itemsPerPage ? chunk(children, itemsPerPage) : [children];
 
   const changePage = (increment) => {
     setPage(page + increment);
