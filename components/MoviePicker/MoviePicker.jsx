@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, IconButton } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
 import MovieResults from '../MovieResults/MovieResults'
 import { getMovieData, searchMovies } from '../../utils/utils'
 import styles from './Form.module.css'
