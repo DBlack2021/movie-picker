@@ -8,7 +8,7 @@ export default function MovieResults({ movieData }) {
 
   return (
     <div className={styles.resultsContainer}>
-      {poster != null && <img src={`https://image.tmdb.org/t/p/w500${poster}`} style={{ width: '500px', height: '700px' }}/>}
+      {poster != null && <img src={`https://image.tmdb.org/t/p/w500${poster}`} className={styles.img} style={{ width: '500px', height: '700px' }}/>}
       <h1>You'll be watching...</h1>
       <h1>{title}!</h1>
       {description.length > 0 && <p>{description}</p>}
@@ -33,7 +33,7 @@ export default function MovieResults({ movieData }) {
           <h2 className={styles.subtitle}>What did critics think?</h2>
           {stars > 0 ?
             <div>
-              <div style={{ fontSize: '50px' }}>
+              <div className={styles.starsFont} style={{ fontSize: '50px' }}>
                 <StarRatingComponent name="rating" value={stars} starCount={10} editing={false} />
               </div>
               <h3 style={{ marginTop: '-10px' }}>{stars}/10 stars</h3>

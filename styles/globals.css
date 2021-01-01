@@ -10,8 +10,8 @@ body {
 }
 
 img {
-  height: calc(750px / 4);
-  width: calc(500px / 4);
+  height: calc(750px / 4)!important;
+  width: calc(500px / 4)!important;
 }
 
 ::-webkit-scrollbar {
