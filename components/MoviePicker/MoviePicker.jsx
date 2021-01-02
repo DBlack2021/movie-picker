@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
 import MovieResults from '../MovieResults/MovieResults'
 import { getMovieData, searchMovies } from '../../utils/utils'
 import styles from './Form.module.css'
 import MovieSearch from '../Carousels/MovieSearch';
-import { blue } from '@material-ui/core/colors'
-
 
 
 export default function MoviePicker() {
@@ -23,6 +20,7 @@ export default function MoviePicker() {
     stars: "", 
     title: "",
     starring: [],
+    isTV: false,
   }) //the randomly chosen movie
 
   const [error, setError] = useState(false);
@@ -38,6 +36,7 @@ export default function MoviePicker() {
       stars: "", 
       title: "",
       starring: [],
+      isTV: tvMode
     })
     setSearchResults([]);
     setError(false);
@@ -49,6 +48,10 @@ export default function MoviePicker() {
     }
     setError(false);
   }, [movie])
+
+  useEffect(() => {
+    search(movie);
+  }, [tvMode])
 
   const addMovie = (movie) => {
     setMovies([...new Set([...movies, movie])])
@@ -77,7 +80,7 @@ export default function MoviePicker() {
     // "~~" for a closest "int"
     const randomMovie = movies[~~(movies.length * Math.random())];
 
-    getMovieData(randomMovie.id).then(response => {
+    getMovieData(randomMovie.id, randomMovie.isTV).then(response => {
       setChosenMovieData(response)
     })
   }
@@ -93,18 +96,19 @@ export default function MoviePicker() {
       stars: "", 
       title: "",
       starring: [],
+      isTV: tvMode
     })
     setError(false);
   }
 
   const search = (query) => {
     if(query) {
-      searchMovies(query).then(response => {
-        if(response.results.length == 0) {
+      searchMovies(query, tvMode).then(response => {
+        if(response.length == 0) {
           setSearchResults([]);
           setError(true);
         } else {
-          setSearchResults(response.results);
+          setSearchResults(response);
         }
       })
     }  
