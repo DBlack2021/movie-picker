@@ -9,7 +9,7 @@ import styles from './SearchResults.module.css'
 export default function Carousel({ itemsPerPage, children }) {
   const [page, setPage] = useState(0);
 
-  //Code from Grepper
+  //Code from Grepper, don't ask me how it works 😬
   const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
 
   const pages = children.length >= itemsPerPage ? chunk(children, itemsPerPage) : [children];

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Button, IconButton } from '@material-ui/core'
+import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
 import MovieResults from '../MovieResults/MovieResults'
 import { getMovieData, searchMovies } from '../../utils/utils'
 import styles from './Form.module.css'
 import MovieSearch from '../Carousels/MovieSearch';
 
+
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]); //the list of movies (an array of objects)
   const [movie, setMovie] = useState(""); //the current search query
-
+  const [tvMode, setTVMode] = useState(false); //by default we're on movie mode
   const [searchResults, setSearchResults] = useState([]) //results
 
   const [chosenMovieData, setChosenMovieData] = useState({
@@ -19,6 +20,7 @@ export default function MoviePicker() {
     stars: "", 
     title: "",
     starring: [],
+    isTV: false,
   }) //the randomly chosen movie
 
   const [error, setError] = useState(false);
@@ -34,6 +36,7 @@ export default function MoviePicker() {
       stars: "", 
       title: "",
       starring: [],
+      isTV: tvMode
     })
     setSearchResults([]);
     setError(false);
@@ -45,6 +48,10 @@ export default function MoviePicker() {
     }
     setError(false);
   }, [movie])
+
+  useEffect(() => {
+    search(movie);
+  }, [tvMode])
 
   const addMovie = (movie) => {
     setMovies([...new Set([...movies, movie])])
@@ -73,7 +80,7 @@ export default function MoviePicker() {
     // "~~" for a closest "int"
     const randomMovie = movies[~~(movies.length * Math.random())];
 
-    getMovieData(randomMovie.id).then(response => {
+    getMovieData(randomMovie.id, randomMovie.isTV).then(response => {
       setChosenMovieData(response)
     })
   }
@@ -89,18 +96,19 @@ export default function MoviePicker() {
       stars: "", 
       title: "",
       starring: [],
+      isTV: tvMode
     })
     setError(false);
   }
 
   const search = (query) => {
     if(query) {
-      searchMovies(query).then(response => {
-        if(response.results.length == 0) {
+      searchMovies(query, tvMode).then(response => {
+        if(response.length == 0) {
           setSearchResults([]);
           setError(true);
         } else {
-          setSearchResults(response.results);
+          setSearchResults(response);
         }
       })
     }  
@@ -111,10 +119,28 @@ export default function MoviePicker() {
     setMovie("");
   }
 
+  const changeMode = (event) => {
+    setTVMode(event.target.checked);
+  }
+
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
-        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
+        <TextField className={styles.input} id="outlined-basic" label={`Enter A ${tvMode ? "TV Show" : "Movie"}...`} variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
+        <FormControlLabel
+          style={{
+            width: '15%',
+            margin: '0'
+          }}
+          control = {
+            <Switch
+              checked={tvMode}
+              onChange={changeMode}
+              name="modeToggle"
+            />
+          }
+          label="TV Mode"
+        />
       </form>
 
       {searchResults.length != 0 &&
@@ -126,7 +152,7 @@ export default function MoviePicker() {
 
       {error && 
         <div className={styles.error}>
-          <h3 style={{color: 'red'}}>No movies were found. Please check the titles you entered and try again</h3>
+          <h3 style={{color: 'red'}}>No {tvMode ? 'shows' : 'movies'} were found. Please check the titles you entered and try again</h3>
           <Button variant="contained" onClick={closeNoResults}>Close</Button>
         </div>
       }

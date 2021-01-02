@@ -5,6 +5,7 @@ import styles from './SearchResults.module.css';
 import Carousel from './Carousel';
 
 export default function MovieSearch({ results, addMovie }) {
+
   const isMobile = useMediaQuery({
     query: '(max-device-width: 600px)'
   })
