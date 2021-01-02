@@ -126,7 +126,7 @@ export default function MoviePicker() {
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
-        <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
+        <TextField className={styles.input} id="outlined-basic" label={`Enter A ${tvMode ? "TV Show" : "Movie"}...`} variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
         <FormControlLabel
           style={{
             width: '15%',
@@ -152,7 +152,7 @@ export default function MoviePicker() {
 
       {error && 
         <div className={styles.error}>
-          <h3 style={{color: 'red'}}>No movies were found. Please check the titles you entered and try again</h3>
+          <h3 style={{color: 'red'}}>No {tvMode ? 'shows' : 'movies'} were found. Please check the titles you entered and try again</h3>
           <Button variant="contained" onClick={closeNoResults}>Close</Button>
         </div>
       }

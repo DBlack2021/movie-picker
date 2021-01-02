@@ -28,10 +28,15 @@
   width: 100%;
 }
 
+.img {
+  width: 500px!important;
+  height: 700px!important;
+}
+
 @media only screen and (max-width: 800px) {
   .img {
-    height: calc(750px / 4);
-    width: calc(500px / 4);
+    height: calc(750px / 4)!important;
+    width: calc(500px / 4)!important;
   }
 
   .starsFont {

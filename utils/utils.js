@@ -34,7 +34,7 @@ export const getMovieData = async (id, isTV) => {
 }
 
 export const searchMovies = async (query, isTV) => {
-  if(query === " ") {
+  if(query.trim() === "") {
     return [];
   }
   const url = `https://api.themoviedb.org/3/search/${isTV ? 'tv' : 'movie'}?api_key=${apiKey}&language=en-US&query=${query}&page=1`
