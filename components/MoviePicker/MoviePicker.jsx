@@ -170,7 +170,7 @@ export default function MoviePicker() {
           </div>
 
           <div className={styles.submitButtons}>
-            <Button variant="contained" onClick={chooseMovie}>{`Choose A ${chosenMovieData.title && 'New'} Movie!`}</Button>
+            <Button variant="contained" onClick={chooseMovie}>{`Pick Something ${chosenMovieData.title && 'New'} To Watch!`}</Button>
           </div>
 
           {chosenMovieData.title &&
