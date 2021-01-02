@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, Button, IconButton } from '@material-ui/core'
+import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core'
+import { withStyles } from '@material-ui/styles'
 import MovieResults from '../MovieResults/MovieResults'
 import { getMovieData, searchMovies } from '../../utils/utils'
 import styles from './Form.module.css'
 import MovieSearch from '../Carousels/MovieSearch';
+import { blue } from '@material-ui/core/colors'
+
+
 
 export default function MoviePicker() {
   const [movies, setMovies] = useState([]); //the list of movies (an array of objects)
   const [movie, setMovie] = useState(""); //the current search query
-
+  const [tvMode, setTVMode] = useState(false); //by default we're on movie mode
   const [searchResults, setSearchResults] = useState([]) //results
 
   const [chosenMovieData, setChosenMovieData] = useState({
@@ -111,10 +115,28 @@ export default function MoviePicker() {
     setMovie("");
   }
 
+  const changeMode = (event) => {
+    setTVMode(event.target.checked);
+  }
+
   return (
     <div className={styles.appContainer}>
       <form className={styles.form} autoComplete="off">
         <TextField className={styles.input} id="outlined-basic" label="Enter A Movie..." variant="outlined" onChange={handleInput} value={movie} onKeyDown={handleKeyDown} />
+        <FormControlLabel
+          style={{
+            width: '15%',
+            margin: '0'
+          }}
+          control = {
+            <Switch
+              checked={tvMode}
+              onChange={changeMode}
+              name="modeToggle"
+            />
+          }
+          label="TV Mode"
+        />
       </form>
 
       {searchResults.length != 0 &&
