@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getActorData } from '../../utils/utils';
 import styles from './ActorModalBody.module.css'
 
-export default function ActorModal({ actorId, character, movie }) {
+export default function ActorModal({ actorId, character }) {
   //This component is just the BODY of the Modal. The actual <Modal> component will be used in a different component
   const [actorData, setActorData] = useState({
     biography: "",

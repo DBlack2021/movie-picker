@@ -40,8 +40,7 @@ export const searchMovies = async (query, isTV) => {
   const url = `https://api.themoviedb.org/3/search/${isTV ? 'tv' : 'movie'}?api_key=${apiKey}&language=en-US&query=${query}&page=1`
   const response = await fetch(url);
   const results = await response.json();
-  console.log(results.results);
-  return Promise.all(results.results.map(result => getMovieData(result.id, isTV)));;
+  return Promise.all(results.results.map(result => getMovieData(result.id, isTV)));
 }
 
 export const getStarring = async (id, isTV) => {
