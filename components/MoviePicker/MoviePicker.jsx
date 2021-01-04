@@ -78,7 +78,8 @@ export default function MoviePicker() {
 
   const chooseMovie = () => {
     // "~~" for a closest "int"
-    const randomMovie = movies[~~(movies.length * Math.random())];
+    const movieArray = chosenMovieData.title ? movies.filter(movie => movie.id != chosenMovieData.id) : movies
+    const randomMovie = movieArray[~~(movieArray.length * Math.random())];
 
     getMovieData(randomMovie.id, randomMovie.isTV).then(response => {
       setChosenMovieData(response)
