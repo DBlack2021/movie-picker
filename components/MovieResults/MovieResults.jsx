@@ -34,7 +34,7 @@ export default function MovieResults({ movieData }) {
           {stars > 0 ?
             <div>
               <div className={styles.starsFont} style={{ fontSize: '50px' }}>
-                <StarRatingComponent name="rating" value={stars} starCount={10} editing={false} />
+                <StarRatingComponent name="rating" value={Math.round(stars)} starCount={10} editing={false} />
               </div>
               <h3 style={{ marginTop: '-10px' }}>{stars}/10 stars</h3>
             </div>           
